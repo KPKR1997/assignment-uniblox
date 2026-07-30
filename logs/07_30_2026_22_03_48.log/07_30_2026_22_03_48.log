@@ -1,0 +1,4 @@
+[2026-07-30 22:03:49,822] INFO - Entered the data ingestion method or component
+[2026-07-30 22:03:49,831] INFO - Read the dataset as dataframe
+[2026-07-30 22:03:49,849] INFO - Train test split initiated
+[2026-07-30 22:03:49,870] INFO - Ingestion of the data is completed

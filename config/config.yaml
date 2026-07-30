@@ -1,0 +1,8 @@
+data:
+  raw_data_path: data/employee_data.csv
+
+artifacts:
+  train_data_path: artifacts/train.csv
+  test_data_path: artifacts/test.csv
+  preprocessor_path: artifacts/preprocessor.pkl
+  model_path: artifacts/model.pkl
