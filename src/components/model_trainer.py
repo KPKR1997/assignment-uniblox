@@ -8,6 +8,9 @@ from sklearn.metrics import (
     recall_score,
     f1_score,
     confusion_matrix
+
+#We have 62:38 proportion distribution in target feature. And enrollment is a binary classification. So I'm prioritizing Classifiers and trees here
+
 )
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
@@ -41,6 +44,7 @@ class ModelTrainer:
             y_train = train_array[:, -1]
             X_test = test_array[:, :-1]
             y_test = test_array[:, -1]
+            #Above step need assurance that last col is target
 
             models = {
                 "Logistic Regression": LogisticRegression(),
@@ -56,6 +60,7 @@ class ModelTrainer:
                     verbose=0
                 )
             }
+            #Defining parameters for tuning each models for GridsearchCV
             params = {
 
                 "Logistic Regression": {
@@ -100,6 +105,8 @@ class ModelTrainer:
                 }
             }
 
+            #The hyperparameter tuning here is done using Gridsearch CV, implemented in 'evaluate_models' method in 'utils.py'
+            #Also prioritizing F1 Score for this data in model evaluation to get best model
             model_report = evaluate_models(X_train, y_train, X_test, y_test, models, params)
             print(model_report)
             best_model_name = max(model_report, key=model_report.get)

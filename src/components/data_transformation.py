@@ -52,6 +52,7 @@ class DataTransformation:
             ])
 
             return preprocessor
+        #preprocessor will be saved in Artifacts as obj
 
         except Exception as e:
             raise CustomException(e, sys)
@@ -80,6 +81,7 @@ class DataTransformation:
             input_feature_train_arr = preprocessing_obj.fit_transform(input_feature_train_df)
             input_feature_test_arr = preprocessing_obj.transform(input_feature_test_df)
 
+            #Append  target column to the transformed feature arrays
             train_arr = np.c_[input_feature_train_arr, np.array(target_feature_train_df)]
             test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
 

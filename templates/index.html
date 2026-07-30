@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Enrollment Prediction</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f4f7fb;
+        --card: #ffffff;
+        --text: #0f2b55;
+        --muted: #61728d;
+        --border: #d5deea;
+        --accent: #17837b;
+        --accent-2: #21c1b1;
+        --pill-bg: #dceeea;
+        --pill-text: #186b65;
+        --success: #166534;
+        --success-bg: #e9f7ee;
+        --danger: #991b1b;
+        --danger-bg: #fdecec;
+        --shadow: 0 18px 48px rgba(15, 43, 85, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Manrope", "Segoe UI", sans-serif;
+        color: var(--text);
+        background: linear-gradient(180deg, #f7f9fc 0%, #eef3f9 100%);
+        padding: 0.75rem;
+      }
+
+      .page {
+        width: min(860px, 100%);
+        margin: 0 auto;
+        padding: 0;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid #e8eef5;
+        border-radius: 28px;
+        padding: clamp(1.1rem, 2.2vw, 1.6rem);
+        box-shadow: var(--shadow);
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: flex-start;
+        margin-bottom: 1.25rem;
+      }
+
+      .header h1 {
+        margin: 0;
+        font-size: clamp(1.8rem, 3.4vw, 2.2rem);
+        line-height: 1.15;
+        letter-spacing: -0.04em;
+      }
+
+      .header p {
+        margin: 0.5rem 0 0;
+        max-width: 28rem;
+        color: var(--muted);
+        font-size: 0.98rem;
+        line-height: 1.5;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.8rem 1.15rem;
+        border-radius: 999px;
+        background: var(--pill-bg);
+        color: var(--pill-text);
+        font-size: 0.95rem;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      form {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .field {
+        display: grid;
+        gap: 0.45rem;
+      }
+
+      .field--full {
+        grid-column: 1 / -1;
+      }
+
+      label {
+        font-size: 0.95rem;
+        font-weight: 800;
+      }
+
+      input,
+      select {
+        width: 100%;
+        min-height: 54px;
+        padding: 0.8rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: #ffffff;
+        color: var(--text);
+        font: inherit;
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      input::placeholder {
+        color: #94a3b8;
+      }
+
+      select {
+        appearance: none;
+        padding-right: 3rem;
+        background-image:
+          linear-gradient(45deg, transparent 50%, #7b8aa3 50%),
+          linear-gradient(135deg, #7b8aa3 50%, transparent 50%);
+        background-position:
+          calc(100% - 24px) calc(50% - 3px),
+          calc(100% - 17px) calc(50% - 3px);
+        background-size: 7px 7px, 7px 7px;
+        background-repeat: no-repeat;
+      }
+
+      input:focus,
+      select:focus {
+        outline: none;
+        border-color: #8ecdc6;
+        box-shadow: 0 0 0 4px rgba(33, 193, 177, 0.14);
+      }
+
+      .helper,
+      .note {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .helper {
+        font-size: 0.92rem;
+      }
+
+      .note {
+        font-size: 0.88rem;
+      }
+
+      .submit-btn {
+        width: 100%;
+        min-height: 56px;
+        border: none;
+        border-radius: 20px;
+        background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 800;
+        cursor: pointer;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+        box-shadow: 0 12px 24px rgba(23, 131, 123, 0.18);
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 16px 28px rgba(23, 131, 123, 0.24);
+      }
+
+      .result {
+        margin-top: 1rem;
+        padding: 0.95rem 1rem;
+        border-radius: 18px;
+        border: 1px solid transparent;
+      }
+
+      .result strong {
+        display: block;
+        margin-bottom: 0.35rem;
+        font-size: 0.82rem;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .result p {
+        margin: 0;
+        font-size: 1.05rem;
+        font-weight: 800;
+      }
+
+      .result--positive {
+        background: var(--success-bg);
+        border-color: #ccebd7;
+        color: var(--success);
+      }
+
+      .result--negative {
+        background: var(--danger-bg);
+        border-color: #f8d0d0;
+        color: var(--danger);
+      }
+
+      @media (max-height: 820px) and (min-width: 641px) {
+        body {
+          padding: 0.5rem;
+        }
+
+        .card {
+          padding: 1rem 1.1rem;
+        }
+
+        .header {
+          margin-bottom: 1rem;
+        }
+
+        .header p {
+          margin-top: 0.35rem;
+          font-size: 0.94rem;
+        }
+
+        .grid {
+          gap: 0.85rem 0.95rem;
+        }
+
+        input,
+        select,
+        .submit-btn {
+          min-height: 50px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .page {
+          width: 100%;
+          padding: 0;
+        }
+
+        .card {
+          border-radius: 22px;
+          padding: 1rem;
+        }
+
+        .header {
+          flex-direction: column;
+          margin-bottom: 1.4rem;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="card" aria-labelledby="prediction-form-title">
+        <div class="header">
+          <div>
+            <h1 id="prediction-form-title">UNIBLOX - Employee Enrollment Prediction</h1>
+            <p>Complete the form below to estimate whether an employee is likely to enroll.</p>
+          </div>
+          <span class="pill">Model-ready form</span>
+        </div>
+
+        <form action="{{ url_for('predict_datapoint') }}" method="post">
+          <div class="grid">
+            <div class="field">
+              <label for="age">Age</label>
+              <input
+                id="age"
+                type="number"
+                name="age"
+                min="22"
+                max="64"
+                step="1"
+                inputmode="numeric"
+                placeholder="Enter age (22-64)"
+                value="{{ request.form.get('age', '') }}"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label for="gender">Gender</label>
+              <select id="gender" name="gender" required>
+                <option value="" disabled {% if not request.form.get('gender') %}selected{% endif %}>
+                  Select gender
+                </option>
+                <option value="Female" {% if request.form.get('gender') == 'Female' %}selected{% endif %}>Female</option>
+                <option value="Male" {% if request.form.get('gender') == 'Male' %}selected{% endif %}>Male</option>
+                <option value="Other" {% if request.form.get('gender') == 'Other' %}selected{% endif %}>Other</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="marital_status">Marital Status</label>
+              <select id="marital_status" name="marital_status" required>
+                <option value="" disabled {% if not request.form.get('marital_status') %}selected{% endif %}>
+                  Select status
+                </option>
+                <option value="Single" {% if request.form.get('marital_status') == 'Single' %}selected{% endif %}>Single</option>
+                <option value="Divorced" {% if request.form.get('marital_status') == 'Divorced' %}selected{% endif %}>Divorced</option>
+                <option value="Married" {% if request.form.get('marital_status') == 'Married' %}selected{% endif %}>Married</option>
+                <option value="Widowed" {% if request.form.get('marital_status') == 'Widowed' %}selected{% endif %}>Widowed</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="salary">Salary</label>
+              <input
+                id="salary"
+                type="number"
+                name="salary"
+                min="2207.79"
+                max="120312"
+                step="0.01"
+                inputmode="decimal"
+                placeholder="Enter salary"
+                value="{{ request.form.get('salary', '') }}"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label for="employment_type">Employment Type</label>
+              <select id="employment_type" name="employment_type" required>
+                <option value="" disabled {% if not request.form.get('employment_type') %}selected{% endif %}>
+                  Select type
+                </option>
+                <option value="Part-time" {% if request.form.get('employment_type') == 'Part-time' %}selected{% endif %}>
+                  Part-time
+                </option>
+                <option value="Full-time" {% if request.form.get('employment_type') == 'Full-time' %}selected{% endif %}>
+                  Full-time
+                </option>
+                <option value="Contract" {% if request.form.get('employment_type') == 'Contract' %}selected{% endif %}>
+                  Contract
+                </option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="region">Region</label>
+              <select id="region" name="region" required>
+                <option value="" disabled {% if not request.form.get('region') %}selected{% endif %}>
+                  Select region
+                </option>
+                <option value="West" {% if request.form.get('region') == 'West' %}selected{% endif %}>West</option>
+                <option value="Midwest" {% if request.form.get('region') == 'Midwest' %}selected{% endif %}>Midwest</option>
+                <option value="Northeast" {% if request.form.get('region') == 'Northeast' %}selected{% endif %}>Northeast</option>
+                <option value="South" {% if request.form.get('region') == 'South' %}selected{% endif %}>South</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="has_dependents">Has Dependents</label>
+              <select id="has_dependents" name="has_dependents" required>
+                <option value="" disabled {% if not request.form.get('has_dependents') %}selected{% endif %}>
+                  Select option
+                </option>
+                <option value="No" {% if request.form.get('has_dependents') == 'No' %}selected{% endif %}>No</option>
+                <option value="Yes" {% if request.form.get('has_dependents') == 'Yes' %}selected{% endif %}>Yes</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="tenure_years">Tenure Years</label>
+              <input
+                id="tenure_years"
+                type="number"
+                name="tenure_years"
+                min="0"
+                max="36"
+                step="0.1"
+                inputmode="decimal"
+                placeholder="Enter tenure in years (0-36)"
+                value="{{ request.form.get('tenure_years', '') }}"
+                required
+              />
+            </div>
+
+            <div class="field field--full">
+              <p class="helper">
+                Use values that match the training data: age 22-64, tenure 0-36 years, and the listed categories only.
+              </p>
+            </div>
+          </div>
+
+          <button class="submit-btn" type="submit">Predict Enrollment</button>
+          <p class="note">Tip: your latest submitted values stay in the form so you can quickly adjust and retry.</p>
+        </form>
+
+        {% if results %}
+        {% set result_text = results|string|lower %}
+        <div
+          class="result {% if 'enroll' in result_text and 'not' not in result_text and 'won' not in result_text %}result--positive{% else %}result--negative{% endif %}"
+          role="status"
+          aria-live="polite"
+        >
+          <strong>Prediction Result</strong>
+          <p>{{ results }}</p>
+        </div>
+        {% endif %}
+      </section>
+    </main>
+  </body>
+</html>
