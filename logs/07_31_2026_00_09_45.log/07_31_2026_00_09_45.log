@@ -1,0 +1,10 @@
+[2026-07-31 00:09:47,388] INFO - Entered the data ingestion method or component
+[2026-07-31 00:09:47,424] INFO - Read the dataset as dataframe
+[2026-07-31 00:09:47,449] INFO - Train test split initiated
+[2026-07-31 00:09:47,481] INFO - Ingestion of the data is completed
+[2026-07-31 00:09:47,572] INFO - Read train and test data completed succesfully
+[2026-07-31 00:09:47,601] INFO - Saved preprocessing object.
+[2026-07-31 00:09:47,613] INFO - Read train and test data completed succesfully
+[2026-07-31 00:09:47,633] INFO - Saved preprocessing object.
+[2026-07-31 00:09:47,636] INFO - Model Training Started
+[2026-07-31 00:10:18,257] INFO - Best Model : Gradient Boosting | F1 Score : 1.0000
