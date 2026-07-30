@@ -1,0 +1,10 @@
+[2026-07-30 22:42:43,911] INFO - Entered the data ingestion method or component
+[2026-07-30 22:42:43,928] INFO - Read the dataset as dataframe
+[2026-07-30 22:42:43,949] INFO - Train test split initiated
+[2026-07-30 22:42:43,977] INFO - Ingestion of the data is completed
+[2026-07-30 22:42:44,059] INFO - Read train and test data completed succesfully
+[2026-07-30 22:42:44,113] INFO - Saved preprocessing object.
+[2026-07-30 22:42:44,124] INFO - Read train and test data completed succesfully
+[2026-07-30 22:42:44,149] INFO - Saved preprocessing object.
+[2026-07-30 22:42:44,152] INFO - Model Training Started
+[2026-07-30 22:43:08,893] INFO - Best Model : Decision Tree | F1 Score : 1.0000

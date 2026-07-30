@@ -6,7 +6,7 @@ import pandas as pd
 import dill
 
 from src.exception import CustomException  
-from sklearn.metrics import r2_score
+from sklearn.metrics import f1_score
 from sklearn.model_selection import GridSearchCV
 
 
@@ -25,22 +25,21 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, params):
     try:
         report = {}
 
-        for i in range(len(models)):
-            model = list(models.values())[i]
-            para = params[list(models.keys())[i]]
-
-            gs = GridSearchCV(model, para, cv=3)
+        for model_name, model in models.items():
+            param = params.get(model_name, {})
+            gs = GridSearchCV(
+                estimator=model,
+                param_grid=param,
+                cv=3,
+                scoring="f1",
+                n_jobs=-1
+            )
             gs.fit(X_train, y_train)
-
-            model.set_params(**gs.best_params_)
-            model.fit(X_train, y_train)
-
-            y_test_pred = model.predict(X_test)
-
-            test_model_score = r2_score(y_test, y_test_pred)
-
-            report[list(models.keys())[i]] = test_model_score
-
+            best_model = gs.best_estimator_
+            y_pred = best_model.predict(X_test)
+            model_score = f1_score(y_test, y_pred)
+            report[model_name] = model_score
+            models[model_name] = best_model
         return report
 
     except Exception as e:

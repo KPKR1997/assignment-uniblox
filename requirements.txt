@@ -6,4 +6,5 @@ numpy
 xgboost
 dill
 pyyaml
+catboost
 
